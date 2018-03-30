@@ -90,11 +90,10 @@ h1 {
 }
 
 h2 {
-    color: rgba(7, 10, 23, 0.8);
-    font-weight: 400;
-    padding-bottom: 4px;
+    color: rgba(11, 15, 36, 0.699);
+    font-weight: 600;
 }
 
-p {
-    color: #070A17;
+p.metadata {
+    color: rgba(11, 15, 36, 0.699);
 }

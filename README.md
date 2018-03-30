@@ -17,4 +17,6 @@ Town Square is for social media enthusiasts who prefer long-form discussion but 
 - WebRTC
 
 # App Walkthrough:
-[to come]
+To come... In the meantime, please check out our prototype:
+
+<iframe width="377" height="667" src="https://xd.adobe.com/embed/5332346f-d4bd-4987-8362-dc79d5878b4e?fullscreen" frameborder="0" allowfullscreen></iframe>

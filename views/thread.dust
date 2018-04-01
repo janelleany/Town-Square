@@ -1,0 +1,37 @@
+{>"layout" /}
+
+{<body}
+	
+    <div class="well">
+        {#threads[0]}
+        <h1>{title}</h1>
+        <p>thread id: {id}</p>
+        {/threads[0]}
+        <ul>
+        <!-- LOOP OVER THREADS  -->
+        {#threads}
+           <li> 
+          
+            <video src="{videopath}"></video>  <!-- first video of thread  -->
+            {videopath}
+            <h4>THUMB PATH: {thumbnailpath}</h4>
+      
+                </div>
+        
+            <div class="collapse" id="thread_{id}">
+                <p><strong>AUTHOR: </strong>{username}</p>
+                <p>TIMESTAMP: {timecreated}</p>
+                <br />
+                <hr />
+                
+            </div>
+            
+           
+            </li>
+            {/threads}
+            <!-- END THREADS LOOP -->
+        </ul>
+    </div>
+    
+	
+{/body}

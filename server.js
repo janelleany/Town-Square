@@ -1,18 +1,23 @@
-var path = require('path');
-var express = require('express');
-var bodyParser = require('body-parser');
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-const fs = require('fs');
-var app = express();
+const express = require('express'),
+    path = require('path'),
+    bodyParser = require('body-parser'),
+    cons = require('consolidate'),
+    dust = require('dustjs-helpers'),
+    pg = require('pg'),
+    app = express(),
+    multer = require('multer'),
+    upload = multer({
+        dest: 'uploads/'
+    }),
+    fs = require('fs'),
+    fetch = require('node-fetch');
 
-const pg = require('pg-promise')(); // immediately invoke
+// const pg = require('pg-promise')(); // immediately invoke
 const readline = require('readline');
-const promisify = require('util').promisify;
 
 const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+    input: process.stdin,
+    output: process.stdout
 });
 
 
@@ -22,13 +27,13 @@ var staticPath = path.join(__dirname, '/public');
 //Sets up static folder with html,css,js 
 app.use(express.static(staticPath));
 
-app.listen(3000, function() {
-  console.log('Server running on port 3000');
+app.listen(3000, function () {
+    console.log('Server running on port 3000');
 });
 
 app.post('*', upload.single('video'), function (req, res, next) {
-  // req.file is the `avatar` file 
-  // req.body will hold the text fields, if there were any 
+    // req.file is the `avatar` file 
+    // req.body will hold the text fields, if there were any 
 
 })
 
@@ -41,133 +46,129 @@ app.post('*', upload.single('video'), function (req, res, next) {
 //            ##########  Kyle ######
 
 
-let userid = 1; // WORKING VALUE FOR USER ID to be changed to actual user's id
 
 // database stuff
-const dbConfig = 'postgres://kboot@localhost:5432/townsquare_db';
-const db = pg(dbConfig);
+config = {
+    user: 'kboot',
+    database: 'townsquare_db',
+    port: 5432,
+    max: 10, // max number of connection can be open to database
+    idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+};
+let pool = new pg.Pool(config);
 
 
-// search threads by id
-let findPostById = id => {
-    console.log(id);
-    return db.query(`select * from posts where id = '${id}'`);
+app.engine('dust', cons.dust);
+app.set('view engine', 'dust');
+app.set('views', __dirname + '/views');
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+let getSuffix = function (req) {
+    return req.url.split('/').pop();
 };
 
-// get all threads from db
-let getAllThreads = () => {
-    return db.query(`select * from threads;`)
-};
-// let getAllThreadsAsPromise = promisify(getAllThreads);
+// GET 
 
-// insert new post
-let insertNewPost = post => {
-    db.query(`insert into posts (videopath, timestamp, user_id, thread_id)
-        VALUES('${post.videopath}', '${post.timestamp}, '${post.userid}, '${post.threadid}')`);
-};
+app.get('/', (req, res) => {
+    res.redirect('/threads');
+});
 
-// delete post by id
-let deletePost = id => {
-    db.query(`DELETE from townsquare_db.posts where id = ${id};`);
-};
-
-// convert readline to promise form
-let rlQuestionAsPromise = function(question) {
-    return new Promise(function(resolve) {
-        rl.question(question, resolve);
+app.get('/threads', function (req, res) {
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        client.query(` SELECT DISTINCT ON(psts.thread_id) psts.videopath, psts.thumbnailpath, psts.timecreated, 
+                            thrds.title, thrds.id, usrs.username
+                        FROM threads thrds
+                        JOIN posts psts
+                        ON psts.thread_id = thrds.id
+                        JOIN users usrs
+                        ON psts.user_id = usrs.id
+                        ORDER BY psts.thread_id, psts.timecreated; `, function (err, result) {
+            done();
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.render('threads', {
+                threads: result.rows
+            });
+        });
     });
-}
+});
 
-let lookupEntry = function () {
-    rl.question('Post id: ', function (id) {
-        findPostById (id);
-        mainMenu();
+app.get('/thread/*', function (req, res) {
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        let postId = parseInt(getSuffix(req)),
+            prevPostId = 4;
+        console.log('postId1: ', postId);
+
+        let rex = new RegExp('^[0-9]$'); //  '/[0-9]+[\/]?$/');
+        if (rex.test(postId)) {
+            prevPostId = postId;
+            console.log('postId2: ', postId);
+        } else {
+            postId = prevPostId;
+            console.log('postId3: ', postId);
+        }
+
+        client.query(` SELECT psts.videopath, psts.thumbnailpath, psts.timecreated, thrds.title, thrds.id, usrs.username
+                        FROM threads thrds
+                        JOIN posts psts
+                        ON psts.thread_id = thrds.id
+                        JOIN users usrs
+                        ON psts.user_id = usrs.id
+                        WHERE psts.thread_id = ${postId}
+                        ORDER BY psts.timecreated;`, function (err, result) {
+            done();
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.render('thread', {
+                threads: result.rows
+            });
+        });
     });
-}
+});
 
-let setEntry = function () {
-    var post = {};
-    rlQuestionAsPromise('Video path: ')
-        .then(function(data) {
-            post.videopath = data.toString();
-            
-            return rlQuestionAsPromise('user_id, thread_id: ')
-        }).catch((error)=>{console.log('error: ', error);
-        })
-        .then(function(data) {
-            post.userid = data.split(',')[0];
-            console.log('userid: ', post.userid);
-            
-            post.threadid = data.split(',')[1];
-            post.timestamp = ( new Date().getTime() ).toString();
-        }).catch((error)=>{console.log('error: ', error);
-    })
-        .then(function() {
-            insertNewPost(post);
-            mainMenu();
-        }).catch((error)=>{console.log('error: ', error);
+
+
+app.get('/createPost', function (req, res) {
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        client.query('SELECT * from posts', function (err, result) {
+            done();
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.render('createPost', {
+                posts: result.rows
+            });
+        });
     });
-};
+});
 
-let deleteEntry = function () {
-    rlQuestionAsPromise('Post id: ')
-        .then( (id) => {
-            findPostById(id);
-        })
-        .then( data => {
-            deletePost(data);
-        })
-        .then( () => {
-            mainMenu();
+function logFetch(url) {
+    return fetch(url)
+        .then(response => response.text())
+        .then(text => {
+            console.log('TEXT', text);
+        }).catch(err => {
+            console.error('fetch failed', err);
         });
 }
-
-let displayEntries = function () {
-    getAllThreads()
-    .then((results) => console.log(results))
-    .then( () => {
-        mainMenu();
-    });
-};
-
-
-let mainMenu = function () {
-    rl.question(`
-    
-    
-    ` +      '1. Look up an entry\n' +
-             '2. Set an entry\n' +
-             '3. Delete an entry\n' +
-             '4. List all entries\n' +
-             '5. Quit\n' +
-             'What do you want to do (1-5)?\n', function (choice) {
-        parsedInt = parseInt(choice);
-        switch (parsedInt) {
-            case 1:
-                //console.log('look up entry');
-                lookupEntry();
-                break;
-            case 2:
-                setEntry();
-                //console.log('set an entry');
-                break;
-            case 3:
-                deleteEntry();
-                //console.log('delete entries');
-                break;
-            case 4:
-                displayEntries();
-                //console.log('list all entries');
-                break;
-            case 5:
-                rl.close();
-                break;
-            default:
-                console.log('That\'s not one of the options.');
-                mainMenu();
-                break;
-        }
-    });
-}
-
-mainMenu();

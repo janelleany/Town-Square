@@ -3,6 +3,7 @@
 {<body}
 	
     <div class="well">
+            <a class="backArrow" href="/threads"> ‹— BACK  </a>
         {#threads[0]}
         <h1>{title}</h1>
         <p>thread id: {id}</p>
@@ -12,7 +13,7 @@
         {#threads}
            <li> 
           
-            <video src="{videopath}"></video>  <!-- first video of thread  -->
+            <video controls src="../{videopath}"></video>  <!-- first video of thread  -->
             {videopath}
             <h4>THUMB PATH: {thumbnailpath}</h4>
       
@@ -31,6 +32,7 @@
             {/threads}
             <!-- END THREADS LOOP -->
         </ul>
+        <a href="/createPost"> ‹— BACK  </a>
     </div>
     
 	

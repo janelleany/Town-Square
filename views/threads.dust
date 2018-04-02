@@ -6,16 +6,19 @@
         <ul>
         <!-- LOOP OVER THREADS  -->
         {#threads}
-           <li> thread id: {id} 
+           <li><a href="/thread/{id}" style="width:100%; display:block; text-decoration:none;">
+            <p>thread id: {id} </p>
+            <p>responses: {@count of=id.id/} </p>
           
-            <video src="{videopath}"></video>  <!-- first video of thread  -->
+            <video src="../{videopath}"></video>  <!-- first video of thread  -->
             {videopath}
+            <h3>THREAD TITLE: </strong>{title}</h3>
             <h4>THUMB PATH: {thumbnailpath}</h4>
       
                 </div>
         
             <div class="collapse" id="thread_{id}">
-                <p><strong>THREAD TITLE: </strong>{title}</p>
+                
                 <p><strong>AUTHOR: </strong>{username}</p>
                 <p>TIMESTAMP: {timecreated}</p>
                 <br />
@@ -23,11 +26,13 @@
                 
             </div>
             
-           
+        </a>
             </li>
             {/threads}
             <!-- END THREADS LOOP -->
+            
         </ul>
+        <a class="newPost" href="/threads">+</a>
     </div>
     
 	

@@ -73,18 +73,24 @@ let getSuffix = function (req) {
 
 // GET 
 
+app.get('/', (req, res) => {
+    res.redirect('/threads');
+});
+
 app.get('/threads', function (req, res) {
     pool.connect(function (err, client, done) {
         if (err) {
             console.log("not able to get connection " + err);
             res.status(400).send(err);
         }
-        client.query(` SELECT psts.videopath, psts.thumbnailpath, psts.timecreated, thrds.title, thrds.id, usrs.username
+        client.query(` SELECT DISTINCT ON(psts.thread_id) psts.videopath, psts.thumbnailpath, psts.timecreated, 
+                            thrds.title, thrds.id, usrs.username
                         FROM threads thrds
                         JOIN posts psts
                         ON psts.thread_id = thrds.id
                         JOIN users usrs
-                        ON psts.user_id = usrs.id; `, function (err, result) {
+                        ON psts.user_id = usrs.id
+                        ORDER BY psts.thread_id, psts.timecreated; `, function (err, result) {
             done();
             if (err) {
                 console.log(err);

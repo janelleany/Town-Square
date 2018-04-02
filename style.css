@@ -55,7 +55,6 @@ h1 {
 }
 
 .video-thumbnail-box {
-    background-image: url('file:///Users/jra/Desktop/DigitalCrafts/W9/Town-Square/images/video_thumbnail.jpg');
     height: 150px;
     width: 150px;
     background-size: cover;
@@ -97,3 +96,4 @@ h2 {
 p.metadata {
     color: rgba(11, 15, 36, 0.699);
 }
+

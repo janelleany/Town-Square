@@ -1,39 +1,32 @@
 {>"layout" /}
 
 {<body}
-	
-    <div class="well">
-            <a class="backArrow" href="/threads"> ‹— BACK  </a>
-        {#threads[0]}
-        <h1>{title}</h1>
-        <p>thread id: {id}</p>
-        {/threads[0]}
-        <ul>
-        <!-- LOOP OVER THREADS  -->
-        {#threads}
-           <li> 
-          
-            <video controls src="../{videopath}"></video>  <!-- first video of thread  -->
-            {videopath}
-            <h4>THUMB PATH: {thumbnailpath}</h4>
-      
-                </div>
+	<div class="back-arrow"><a href="/threads"> <img src="../images/left-arrow.svg" alt="<-- BACK"></a></div>
+
+
+    <div class="entire-thread-box">
         
-            <div class="collapse" id="thread_{id}">
-                <p><strong>AUTHOR: </strong>{username}</p>
-                <p>TIMESTAMP: {timecreated}</p>
-                <br />
-                <hr />
-                
-            </div>
-            
-           
-            </li>
-            {/threads}
-            <!-- END THREADS LOOP -->
-        </ul>
-        <a href="/createPost"> ‹— BACK  </a>
-    </div>
+        {#threads[0]}
+        <div class="thread-view-top">
+            <div class="thread-view-title"><h2 class="title">{title}</h2></div>
+            <div class="thread-view-replies"><p class="metadata">12 replies</p></div>
+        </div>
+
+        {/threads[0]}
+
+
+    <!-- LOOP OVER #threads object containing ALL POSTS WITH CURRENT THREAD_ID -->
     
-	
+    {#threads}
+        <div class="video-box" style="background-image: url(../{thumbnailpath})">
+            <div>
+                <a href="../{videopath}" style="text-decoration: none"><img src="../images/Video Play icon.png" alt="play"></a>
+            </div>
+        </div>
+        <div class="thread-view-authorship">
+            <p class="metadata">{username}</p>
+            <p class="metadata">{timecreated}</p>
+        </div>
+    {/threads}
+          
 {/body}

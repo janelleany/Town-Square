@@ -2,23 +2,29 @@
 
 {<body}
     <!-- LOOP OVER THREADS  -->
+    <div class="list-view-box">
     {#threads}
 
     <!-- create a single thread box -->
     <div class="thread-box">
-        <div class="press-play"></div>
-        <div class="video-thumbnail-box" style="background-image: url({thumbnailpath})"></div>
+        <div class="video-thumbnail-box" style="background-image: url({thumbnailpath})">
+            <div class="press-play-icon">
+            <a href="/thread/{id}" style="text-decoration: none"><img src="../images/Video Play icon.png" alt="play"></a>
+            </div>
+        </div>
         <div class="thread-metadata-box">
-            <div class="thread-title"><h2 class="title">{title}</h2></div>
-            <div class="reply-count"><p class="metadata">{@count of=id.id/} replies</p></div>
+            <div class="thread-title"><a href="/thread/{id}" style="text-decoration: none"><h2 class="title">{title}</h2></a></div>
+            <div class="reply-count"><p class="metadata">12 replies</p></div>
             <div class="authorship">
                 <p class="metadata">{username}</p>
-                <p class="metadata">{timecreated}</p>
+                <p class="metadata">23-Mar-2018</p>
             </div>
         </div>
     </div>
     <!-- end of thread box -->
 
     {/threads}
+
+    </div>
 	
 {/body}

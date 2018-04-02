@@ -1,39 +1,24 @@
 {>"layout" /}
 
 {<body}
-	
-    <div class="well">
-        <ul>
-        <!-- LOOP OVER THREADS  -->
-        {#threads}
-           <li><a href="/thread/{id}" style="width:100%; display:block; text-decoration:none;">
-            <p>thread id: {id} </p>
-            <p>responses: {@count of=id.id/} </p>
-          
-            <video src="../{videopath}"></video>  <!-- first video of thread  -->
-            {videopath}
-            <h3>THREAD TITLE: </strong>{title}</h3>
-            <h4>THUMB PATH: {thumbnailpath}</h4>
-      
-                </div>
-        
-            <div class="collapse" id="thread_{id}">
-                
-                <p><strong>AUTHOR: </strong>{username}</p>
-                <p>TIMESTAMP: {timecreated}</p>
-                <br />
-                <hr />
-                
+    <!-- LOOP OVER THREADS  -->
+    {#threads}
+
+    <!-- create a single thread box -->
+    <div class="thread-box">
+        <div class="press-play"></div>
+        <div class="video-thumbnail-box" style="background-image: url({thumbnailpath})"></div>
+        <div class="thread-metadata-box">
+            <div class="thread-title"><h2 class="title">{title}</h2></div>
+            <div class="reply-count"><p class="metadata">{@count of=id.id/} replies</p></div>
+            <div class="authorship">
+                <p class="metadata">{username}</p>
+                <p class="metadata">{timecreated}</p>
             </div>
-            
-        </a>
-            </li>
-            {/threads}
-            <!-- END THREADS LOOP -->
-            
-        </ul>
-        <a class="newPost" href="/threads">+</a>
+        </div>
     </div>
-    
+    <!-- end of thread box -->
+
+    {/threads}
 	
 {/body}

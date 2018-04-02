@@ -49,7 +49,8 @@ app.post('*', upload.single('video'), function (req, res, next) {
 
 // database stuff
 config = {
-    user: 'kboot',
+    host: 'localhost',
+    user: 'jra',
     database: 'townsquare_db',
     port: 5432,
     max: 10, // max number of connection can be open to database

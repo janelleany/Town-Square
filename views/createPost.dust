@@ -1,7 +1,7 @@
 {>"layout" /}
 
 {<body}
-	
+<div class="back-arrow"><a href="/threads"><img src="../images/left-arrow-white.svg" alt="<-- BACK" style="width: 30px; height: 25px;"></a></div>	
 		
      <div class="left recordVideo">
        <h2>Preview</h2>

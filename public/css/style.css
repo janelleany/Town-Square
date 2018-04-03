@@ -10,6 +10,7 @@ body {
     align-items: center;
     font-family: 'PT Sans Narrow', 'Open Sans Condensed', sans-serif;
     background-color: rgba(228, 229, 230, 1);
+    position: relative;
 }
 .head {
     display: block;
@@ -20,6 +21,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    z-index: 3;
+}
+
+.header-spaceholder {
+    width: 100vw;
+    height: 70px;
+    
 }
 
 .banner {

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <div class="header-spaceholder"></div>
     <header class="header">
         <div class="banner">
             <div class="logo_box">

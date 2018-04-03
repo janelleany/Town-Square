@@ -124,7 +124,7 @@ app.get('/thread/*', function (req, res) {
             console.log('postId3: ', postId);
         }
 
-        client.query(` SELECT psts.videopath, psts.thumbnailpath, psts.timecreated, thrds.title, thrds.id, usrs.username
+        client.query(` SELECT psts.videopath, psts.thumbnailpath, psts.timecreated, thrds.title, thrds.id, usrs.username, psts.id
                         FROM threads thrds
                         JOIN posts psts
                         ON psts.thread_id = thrds.id

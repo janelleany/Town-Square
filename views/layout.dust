@@ -12,11 +12,10 @@
     <header class="header">
         <div class="banner">
             <div class="logo_box">
-                <h1>Town Square</h1>
+                <a href="/threads" style="text-decoration: none"><h1>Town Square</h1></a>
             </div>
         </div>
     </header>
-
 
 
     <div>

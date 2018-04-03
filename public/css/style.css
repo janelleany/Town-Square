@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+}
 
 body {
     display: flex;
@@ -13,9 +17,11 @@ body {
     background-color: rgba(228, 229, 230, 1);
     position: relative;
 }
+
 .head {
     display: block;
 }
+
 .header {
     width: 100vw;
     height: 70px;
@@ -42,7 +48,6 @@ body {
 }
 
 h1 {
-    /* font-size: 30px; */
     color: rgba(245, 246, 252, 1);
     font-weight: 100;
 }
@@ -132,6 +137,7 @@ p.metadata {
     z-index: 1;
 }
 
+
 .create-new-icon {
     z-index: 2;
     position: fixed;
@@ -215,4 +221,36 @@ img {
 div.post-box:first-child {
     width: 100%;
     height: 300px;
+}
+
+.viewable-on {
+    display:block;
+}
+
+.viewable-off {
+    display:none;
+}
+
+#preview {
+    width: 100vw;
+    height: 100vh;
+    object-fit: fill;
+}
+
+#recording {
+    max-width: 360px;
+}
+
+.button {
+    border: 1px solid #999;
+}
+
+.formContainer {
+    display:flex;
+    flex-direction: column;
+}
+
+.buttons {
+    display:flex;
+    justify-content: space-between;
 }

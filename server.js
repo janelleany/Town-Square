@@ -12,7 +12,9 @@ const express = require('express'),
     fs = require('fs'),
     fetch = require('node-fetch');
 
-// const pg = require('pg-promise')(); // immediately invoke
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -20,37 +22,46 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-
-
 var staticPath = path.join(__dirname, '/public');
 
-//Sets up static folder with html,css,js 
 app.use(express.static(staticPath));
 
 app.listen(3000, function () {
     console.log('Server running on port 3000');
 });
 
-app.post('*', upload.single('video'), function (req, res, next) {
-    // req.file is the `avatar` file 
-    // req.body will hold the text fields, if there were any 
+app.post('/video', upload.single('video'), function (req, res, next) {
+    console.log('/video POST start')
+    console.log(req.body.threadtitle)
+    console.log(req.body.username)
+    console.log(req.file.filename)
+    let dt = new Date();
+    var utcDate = dt.toUTCString();
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        client.query(`INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
+        VALUES ('uploads/${req.file.filename}.webm','uploads/${req.file.filename}.jpg', ${utcDate}, ${req.body.username}, 2 );`, function (err, result) {
+            done();
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.render('threads', {
+                threads: result.rows
+            });
+        });
+    });
+    res.end(console.log('/video POST end'))
 
 })
 
-
-
-
-
-
-
-//            ##########  Kyle ######
-
-
-
-// database stuff
 config = {
     host: 'localhost',
-    user: 'jra',
+    user: 'ubuntu',
+    // user: 'put your username here'
     database: 'townsquare_db',
     port: 5432,
     // password: 'square',
@@ -58,7 +69,6 @@ config = {
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle befo$
 };
 let pool = new pg.Pool(config);
-
 
 app.engine('dust', cons.dust);
 app.set('view engine', 'dust');
@@ -143,8 +153,6 @@ app.get('/thread/*', function (req, res) {
         });
     });
 });
-
-
 
 app.get('/createPost', function (req, res) {
     pool.connect(function (err, client, done) {

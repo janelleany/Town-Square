@@ -15,6 +15,7 @@ body {
     align-items: center;
     font-family: 'PT Sans Narrow', 'Open Sans Condensed', sans-serif;
     background-color: rgba(228, 229, 230, 1);
+    position: relative;
 }
 
 .head {
@@ -27,6 +28,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    z-index: 3;
+}
+
+.header-spaceholder {
+    width: 100vw;
+    height: 70px;
+
 }
 
 .banner {
@@ -48,7 +57,7 @@ h1 {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 50vw;
+    width: 95vw;
     height: 95vh;
     max-width: 700px;
 }
@@ -57,9 +66,8 @@ h1 {
     display: flex;
     background-color: white;
     min-height: 150px;
-    margin-top: 24px;
+    margin-top: 16px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.08);
-    min-width: 345px;
     width: 100%;
 }
 
@@ -110,25 +118,49 @@ p.metadata {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 50vw;
+    width: 100%;
     max-width: 700px;
     background-color: white;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.08);
     padding-top: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
+    margin-top: 12px;
 }
 
 .back-arrow {
-    width: 30px;
-    height: 15px;
-    color: rgba(244, 248, 247, 1);
-    padding-bottom: 36px;
-    padding-top: 12px;
+    width: 85%;
+    position: fixed;
+    top: 24px;
+    z-index: 3;
 }
 
 .press-play-icon {
     z-index: 1;
+}
+
+
+.create-new-icon {
+    z-index: 2;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.reply-to-thread-icon {
+    z-index: 2;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 55px;
+    height: 55px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .thread-view-top {
@@ -139,24 +171,38 @@ p.metadata {
     
 }
 
-.video-box {
+.post-box-container {
     width: 85%;
-    height: 250px;
-    background-size: cover;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     margin-top: 10px;
 }
 
-.video-box-replies {
-    width: 70%;
+.post-box {
+    width: 75%;
     height: 250px;
-    background-size: cover;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 12px;
+    border: 1px solid rgb(112, 112, 112);
+    padding-bottom: 5px;
+}
+
+.video-box {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+img {
+    max-width: 100%;
+}
+.thumbnail {
+    display: block;
+    object-fit: cover;
 }
 
 .border {
@@ -168,7 +214,13 @@ p.metadata {
 .thread-view-authorship {
     display: flex;
     justify-content: space-between;
-    width: 85%;
+    width: 100%;
+    padding: 5px;
+}
+
+div.post-box:first-child {
+    width: 100%;
+    height: 300px;
 }
 
 .viewable-on {

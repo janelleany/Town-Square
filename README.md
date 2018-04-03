@@ -20,4 +20,4 @@ Town Square is for social media enthusiasts who prefer long-form discussion but 
 - PostgreSQL
 
 # App Walkthrough:
-To come... In the meantime, please check out our [prototype] (https://xd.adobe.com/embed/5332346f-d4bd-4987-8362-dc79d5878b4e?fullscreen)
+To come... In the meantime, please check out our prototype <a href="https://xd.adobe.com/view/5332346f-d4bd-4987-8362-dc79d5878b4e/?fullscreen">here</a>.

@@ -60,11 +60,11 @@ app.post('/video', upload.single('video'), function (req, res, next) {
 
 config = {
     host: 'localhost',
-    // user: 'ubuntu',
-    user: 'aarongross',
+    user: 'ubuntu',
+    // user: 'put your username here'
     database: 'townsquare_db',
     port: 5432,
-    password: 'square',
+    // password: 'square',
     max: 10, // max number of connection can be open to database
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle befo$
 };

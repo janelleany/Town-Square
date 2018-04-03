@@ -1,7 +1,9 @@
 {>"layout" /}
 
 {<body}
-	
+<div class="back-arrow"><a href="/threads"><img src="../images/left-arrow-white.svg" alt="<-- BACK" style="width: 30px; height: 25px;"></a></div>	
+		
+   
      <div class="recordVideo viewable-on">
        <video id="preview" autoplay muted></video>
           <div id="recordButton">Record</div>

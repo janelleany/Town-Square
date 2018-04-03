@@ -1,17 +1,14 @@
 {>"layout" /}
 
 {<body}
-    <!-- LOOP OVER THREADS  -->
+
     <div class="list-view-box">
-    {#threads}
+    
+    {#threads} <!-- LOOP OVER THREADS  -->
 
     <!-- create a single thread box -->
     <div class="thread-box">
-        <div class="video-thumbnail-box" style="background-image: url({thumbnailpath})">
-            <div class="press-play-icon">
-            <a href="/thread/{id}" style="text-decoration: none"><img src="../images/Video Play icon.png" alt="play"></a>
-            </div>
-        </div>
+        <a href="/thread/{id}" style="text-decoration: none"><div class="video-thumbnail-box" style="background-image: url({thumbnailpath})"></div></a>
         <div class="thread-metadata-box">
             <div class="thread-title"><a href="/thread/{id}" style="text-decoration: none"><h2 class="title">{title}</h2></a></div>
             <div class="reply-count"><p class="metadata">12 replies</p></div>
@@ -23,8 +20,17 @@
     </div>
     <!-- end of thread box -->
 
-    {/threads}
+    {/threads} <!-- end of loop -->
+    
+    </div>
 
+    <div class="create-new-icon">
+        <a href="/createPost" style="text-decoration: none"><img src="../images/plus.svg"></a>
     </div>
 	
 {/body}
+
+
+<div class="press-play-icon">
+            
+            </div>

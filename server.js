@@ -58,12 +58,6 @@ app.post('/video', upload.single('video'), function (req, res, next) {
 
 })
 
-app.post('/form', (req,res) => {
-    console.log('/form POST start')
-    console.log(`Thread Title: ${req.body.threadtitle}`)
-    res.end(console.log('/form POST end'))
-})
-
 config = {
     host: 'localhost',
     // user: 'ubuntu',

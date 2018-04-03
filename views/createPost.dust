@@ -2,26 +2,31 @@
 
 {<body}
 	
-		
-     <div class="left recordVideo">
+     <div class="recordVideo viewable-on">
+       <video id="preview" autoplay muted></video>
+          <div id="recordButton">Record</div>
+          <div id="stopButton">Stop</div>
+     </div>
+
+    <div class="showVideo viewable-off">
        <h2>Preview</h2>
-       <video id="preview" width="160" height="120" autoplay muted></video>
-       <div id="recordButton" class="button">Record Vid</div>
-       <div id="stopButton" class="button">Stop</div>
-     </div>
+       <video id="recording" controls></video>
+       <form class ="formContainer" data-thread="form">
+        <div>
+            <label for="title">Thread Title:</label>
+            <input type="text" id="thread_title" name="title">
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="user" name="username">
+        </div>
+        <div class="buttons">
+            <button class="button re_record" type="button">Re-record</button>
+            <button class="button submit_thread" type="submit">Submit Thread</button>
+        </div>
+       </form>
+    </div>
 
-     <div class="right">
-       <h2>Recording</h2>
-       <video id="recording" width="160" height="120" controls></video>
-
-     <div class="bottom">
-       <pre id="log"></pre>
-     </div>
     <script src="index.js"></script>
-    <script>
-        {#posts}
-			recordVideo({id}); 
-        {/posts}
-    </script>	
 
 {/body}

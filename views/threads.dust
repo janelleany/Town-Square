@@ -1,9 +1,10 @@
 {>"layout" /}
 
 {<body}
-    <!-- LOOP OVER THREADS  -->
+
     <div class="list-view-box">
-    {#threads}
+    
+    {#threads} <!-- LOOP OVER THREADS  -->
 
     <!-- create a single thread box -->
     <div class="thread-box">
@@ -23,8 +24,12 @@
     </div>
     <!-- end of thread box -->
 
-    {/threads}
+    {/threads} <!-- end of loop -->
+    
+    </div>
 
+    <div class="create-new-icon">
+        <a href="/createPost" style="text-decoration: none"><img src="../images/plus.svg"></a>
     </div>
 	
 {/body}

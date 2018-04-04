@@ -1,5 +1,5 @@
 let recordVideo = () => {
-
+    
     let preview = document.getElementById("preview");
     let recording = document.getElementById("recording");
     let recordButton = document.getElementById("recordButton");
@@ -57,7 +57,7 @@ let recordVideo = () => {
 
             }).then(showPreview => {
                 recordVideoSelector.className = 'recordVideo viewable-off'
-                showVideoSelector.className = 'showVideo viewable-on'
+                showVideoSelector.className = 'showVideo viewable-on animated bounce slideInRight'
                 
             })
     }, false);
@@ -68,6 +68,7 @@ let recordVideo = () => {
 }
 
 let startPreview = () => {
+    let recordVideoSelector = document.querySelector('.recordVideo')
         navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: true
@@ -75,6 +76,8 @@ let startPreview = () => {
                 preview.srcObject = stream;
                 preview.captureStream = preview.captureStream || preview.mozCaptureStream;
                 return new Promise(resolve => preview.onplaying = resolve);
+            }).then(slideUp => {
+                recordVideoSelector.className = 'recordVideo viewable-on animated slideInUp';
             })
 }
 
@@ -82,23 +85,58 @@ let submitThread = (form) => {
     let submitThreadFormSelector = document.querySelector('form')
 
     submitThreadFormSelector.addEventListener('submit', (event) => {
+        event.preventDefault();
+
         let threadTitleSelector = document.getElementById('thread_title').value;
         let threadUsernameSelector = document.getElementById('user').value;
 
         form.append('threadtitle', threadTitleSelector);
         form.append('username', threadUsernameSelector);
 
-        event.preventDefault();
         console.log('Fetching....')
         fetch('http://localhost:3000/video', {
             method: 'POST',
             body: form 
-            // headers: {"Content-Type":"application/json"}
         })
         console.log('Done fetching')
     })
 }
 
+let submitReply = (form) => {
+    let submitThreadFormSelector = document.querySelector('form')
+
+    submitThreadFormSelector.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let threadUsernameSelector = document.getElementById('user').value;
+        form.append('username', threadUsernameSelector);
+        //regular expression to get thread id
+        // form.append('threadId', threadId);
+
+        console.log('Fetching....')
+        fetch('http://localhost:3000/videoReply', {
+            method: 'POST',
+            body: form 
+        })
+        console.log('Done fetching')
+    })
+}
+
+let guid = () => {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4();
+  }
+
+let getPath = () => {
+    let path = window.location.pathname;
+    let regex = /^\/createReply\/([A-Za-z0-9-]+)$/g;
+    let id = regex.exec(path);
+    return id[1]
+}
 startPreview();
 recordVideo();
 

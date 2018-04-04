@@ -35,26 +35,17 @@ app.post('/video', upload.single('video'), function (req, res, next) {
     console.log(req.body.threadtitle)
     console.log(req.body.username)
     console.log(req.file.filename)
-    let dt = new Date();
-    var utcDate = dt.toUTCString();
-    pool.connect(function (err, client, done) {
-        if (err) {
-            console.log("not able to get connection " + err);
-            res.status(400).send(err);
-        }
-        client.query(`INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-        VALUES ('uploads/${req.file.filename}.webm','uploads/${req.file.filename}.jpg', ${utcDate}, ${req.body.username}, 2 );`, function (err, result) {
-            done();
-            if (err) {
-                console.log(err);
-                res.status(400).send(err);
-            }
-            res.render('threads', {
-                threads: result.rows
-            });
-        });
-    });
+    
     res.end(console.log('/video POST end'))
+
+})
+
+app.post('/videoReply/*', upload.single('video'), function (req, res, next) {
+    console.log('/videoReply POST start')
+    console.log(req.body.username)
+    console.log(req.body.thread_id)
+    console.log(req.file.filename)
+    res.end(console.log('/videoReply POST end'))
 
 })
 
@@ -167,6 +158,25 @@ app.get('/createPost', function (req, res) {
                 res.status(400).send(err);
             }
             res.render('createPost', {
+                posts: result.rows
+            });
+        });
+    });
+});
+
+app.get('/createReply*/', function (req, res) {
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("not able to get connection " + err);
+            res.status(400).send(err);
+        }
+        client.query('SELECT * from posts', function (err, result) {
+            done();
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+            res.render('createReply', {
                 posts: result.rows
             });
         });

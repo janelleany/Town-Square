@@ -6,7 +6,7 @@ let recordVideo = () => {
     let stopButton = document.getElementById("stopButton");
     let showVideoSelector = document.querySelector('.showVideo')
     let recordVideoSelector = document.querySelector('.recordVideo')
-    let submitThreadSelector = document.querySelector('.submit_thread')
+    let submitThreadSelector = document.querySelector('.submit_reply')
 
     let recordingTimeMS = 1000;
 
@@ -53,7 +53,7 @@ let recordVideo = () => {
                 formData.append('video', recordedBlob)
                 recording.src = URL.createObjectURL(recordedBlob);
                 reRecord();
-                submitThread(formData);
+                submitReply(formData);
 
             }).then(showPreview => {
                 recordVideoSelector.className = 'recordVideo viewable-off'
@@ -81,27 +81,6 @@ let startPreview = () => {
             })
 }
 
-let submitThread = (form) => {
-    let submitThreadFormSelector = document.querySelector('form')
-
-    submitThreadFormSelector.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        let threadTitleSelector = document.getElementById('thread_title').value;
-        let threadUsernameSelector = document.getElementById('user').value;
-
-        form.append('threadtitle', threadTitleSelector);
-        form.append('username', threadUsernameSelector);
-
-        console.log('Fetching....')
-        fetch('http://localhost:3000/video', {
-            method: 'POST',
-            body: form 
-        })
-        console.log('Done fetching')
-    })
-}
-
 let submitReply = (form) => {
     let submitThreadFormSelector = document.querySelector('form')
 
@@ -109,12 +88,14 @@ let submitReply = (form) => {
         event.preventDefault();
 
         let threadUsernameSelector = document.getElementById('user').value;
+        let threadId = getPath();
+
+        form.append('post_id', guid());
+        form.append('thread_id', threadId);
         form.append('username', threadUsernameSelector);
-        //regular expression to get thread id
-        // form.append('threadId', threadId);
 
         console.log('Fetching....')
-        fetch('http://localhost:3000/videoReply', {
+        fetch('http://localhost:3000/postReply', {
             method: 'POST',
             body: form 
         })
@@ -153,8 +134,3 @@ let reRecord = () => {
 startPreview();
 recordVideo();
 
-//janelle's press play event listener
-// let playIcon = document.querySelector("press-play-icon");
-// playIcon.addEventListener("click", function() {
-//   if (video.paused === true) {video.play()} else {video.pause()}
-// });

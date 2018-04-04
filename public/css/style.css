@@ -257,9 +257,7 @@ div.post-box:first-child {
     max-width: 360px;
 }
 
-.button {
-    border: 1px solid #999;
-}
+
 
 .formContainer {
     display:flex;

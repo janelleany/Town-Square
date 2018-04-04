@@ -153,3 +153,8 @@ let reRecord = () => {
 startPreview();
 recordVideo();
 
+//janelle's press play event listener
+// let playIcon = document.querySelector("press-play-icon");
+// playIcon.addEventListener("click", function() {
+//   if (video.paused === true) {video.play()} else {video.pause()}
+// });

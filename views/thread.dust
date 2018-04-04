@@ -19,7 +19,11 @@
     <div class="post-box-container">
     {#threads}
         <div class="post-box">
-            <div class="video-box" style="background-image: url(../{thumbnailpath})"></div>
+            <div class="video-box" style="background-image: url(../{thumbnailpath})">
+                <div class="press-play-icon">
+                    <a href="../{videopath}"><img src="../images/Video Play icon.png"></a>
+                </div>
+            </div>
             <div class="thread-view-authorship">
                 <p class="metadata">{username}</p>
                 <p class="metadata">{timecreated}</p>
@@ -29,7 +33,7 @@
     </div> <!--end of post-box-container div -->
 
     <div class="reply-to-thread-icon">
-        <a href="/createPost" style="text-decoration: none; display: flex; justify-content: center;"><img src="../images/reply.svg" style="width: 75%; height: 75%"></a>
+        <a href="/createReply/{id}" style="text-decoration: none; display: flex; justify-content: center;"><img src="../images/reply.svg" style="width: 75%; height: 75%"></a>
     </div>
           
 {/body}

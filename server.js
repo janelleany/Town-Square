@@ -164,7 +164,7 @@ app.get('/createPost', function (req, res) {
     });
 });
 
-app.get('/createReply*/', function (req, res) {
+app.get('/createReply', function (req, res) {
     pool.connect(function (err, client, done) {
         if (err) {
             console.log("not able to get connection " + err);

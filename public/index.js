@@ -8,7 +8,6 @@ let recordVideo = () => {
     let recordVideoSelector = document.querySelector('.recordVideo')
     let submitThreadSelector = document.querySelector('.submit_thread')
 
-
     let recordingTimeMS = 1000;
 
     function wait(delayInMS) {
@@ -137,6 +136,7 @@ let getPath = () => {
     let id = regex.exec(path);
     return id[1]
 }
+
 startPreview();
 recordVideo();
 

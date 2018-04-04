@@ -1,0 +1,28 @@
+{>"layout" /}
+
+{<body}
+	
+     <div class="recordVideo viewable-on">
+       <video id="preview" autoplay muted></video>
+          <div id="recordButton">Record</div>
+          <div id="stopButton">Stop</div>
+     </div>
+
+    <div class="showVideo viewable-off">
+       <h2>Preview</h2>
+       <video id="recording" controls></video>
+       <form class ="formContainer" data-thread="form">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="user" name="username">
+        </div>
+        <div class="buttons">
+            <button class="button re_record" type="button">Re-record</button>
+            <button class="button submit_reply" type="submit">Submit Reply</button>
+        </div>
+       </form>
+    </div>
+
+    <script src="index.js"></script>
+
+{/body}

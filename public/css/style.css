@@ -238,7 +238,7 @@ div.post-box:first-child {
 .viewable-on {
     max-width: 700px;
     width: 100vw;
-    height: 100vh;
+    height: 100vh!important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -281,6 +281,7 @@ div.post-box:first-child {
     right: 5vw;
     width: 55px;
     height: 55px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .stop-icon {
@@ -293,6 +294,8 @@ div.post-box:first-child {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 100%;
 }
 
 

@@ -1,78 +1,124 @@
-CREATE TABLE posts (
+CREATE TABLE posts
+(
     id SERIAL PRIMARY KEY,
     videopath VARCHAR not null,
     thumbnailpath VARCHAR,
     timecreated TIMESTAMP,
-    user_id INTEGER, 
+    user_id VARCHAR,
     thread_id INTEGER
 );
 
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0002.webm','videos/thumb-0002.jpg', now(), 2, 2 );
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0003.webm','videos/thumb-0003.jpg', now(), 3, 3 );
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0004.webm','videos/thumb-0004.jpg', now(), 4, 4 );
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0005.webm','videos/thumb-0005.jpg', now(), 5, 5 );
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0006.webm','videos/thumb-0006.jpg', now(), 6, 6 );
-INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0007.webm','videos/thumb-0007.jpg', now(), 7, 7 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0002.webm', 'videos/thumb-0002.jpg', now(), 'Spots Giraffe', 2 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0003.webm', 'videos/thumb-0003.jpg', now(), 'Bucky the Donkey', 3 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0004.webm', 'videos/thumb-0004.jpg', now(), 'Stripes Zebra' , 4 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0005.webm', 'videos/thumb-0005.jpg', now(), 'Catfish McGee', 5 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0006.webm', 'videos/thumb-0006.jpg', now(), 'Sandy Cheeks', 6 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0007.webm', 'videos/thumb-0007.jpg', now(), 'Cosmo Chicken', 7 );
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR not null
+
+CREATE TABLE users
+(
+    -- id SERIAL PRIMARY KEY,
+    username VARCHAR PRIMARY KEY
 );
 
-INSERT INTO users ( username )
-    VALUES ('Spots Giraffe' );
-INSERT INTO users ( username )
-    VALUES ('Stripes Zebra' );
-    INSERT INTO users ( username )
-    VALUES ('Bucky the Donkey' );
-    INSERT INTO users ( username )
-    VALUES ('Catfish McGee' );
-    INSERT INTO users ( username )
-    VALUES ('Sandy Cheeks' );
-    INSERT INTO users ( username )
-    VALUES ('Cosmo Chicken' );
-    INSERT INTO users ( username )
-    VALUES ('Scooter Worm' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Spots Giraffe' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Stripes Zebra' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Bucky the Donkey' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Catfish McGee' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Sandy Cheeks' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Cosmo Chicken' );
+INSERT INTO users
+    ( username )
+VALUES
+    ('Scooter Worm' );
 
-CREATE TABLE threads (
+CREATE TABLE threads
+(
     id SERIAL PRIMARY KEY,
     title VARCHAR not null
 );
 
-INSERT INTO threads ( title )
-    VALUES ('Vibranium for sale!' );
-    INSERT INTO threads ( title )
-    VALUES ('Was T’Challa wrong?' );
-    INSERT INTO threads ( title )
-    VALUES ('Best fight scene' );
-    INSERT INTO threads ( title )
-    VALUES ('Okoye rocks!' );
-    INSERT INTO threads ( title )
-    VALUES ('Gotta see this movie' );
-    INSERT INTO threads ( title )
-    VALUES ('Still gotta see!' );
-
-
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Vibranium for sale!' );
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Was TChalla wrong?' );
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Best fight scene' );
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Okoye rocks!' );
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Gotta see this movie' );
+INSERT INTO threads
+    ( title )
+VALUES
+    ('Still gotta see!' );
 
 
 -- create more posts
-    INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0008.webm','videos/thumb-0008.jpg', now(), 2, 2 );
-    
-    INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0009.webm','videos/thumb-0009.jpg', now(), 4, 2 );
-
-    INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0010.webm','videos/thumb-0010.jpg', now(), 3, 2 );
-
-    INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0011.webm','videos/thumb-0011.jpg', now(), 2, 3 );
-
-    INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-    VALUES ('videos/vid-0012.webm','videos/thumb-0012.jpg', now(), 2, 3 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0008.webm', 'videos/thumb-0008.jpg', now(), 'Spots Giraffe', 2 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0009.webm', 'videos/thumb-0009.jpg', now(), 'Stripes Zebra', 2 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0010.webm', 'videos/thumb-0010.jpg', now(), 'Bucky the Donkey', 2 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0011.webm', 'videos/thumb-0011.jpg', now(), 'Spots Giraffe', 3 );
+INSERT INTO posts
+    (videopath, thumbnailpath, timecreated, user_id, thread_id)
+VALUES
+    ('videos/vid-0012.webm', 'videos/thumb-0012.jpg', now(), 'Spots Giraffe', 3 );

@@ -22,7 +22,7 @@
         </div>
        </form>
     </div>
+    <script src="/reply.js"></script>
 
-    <script src="index.js"></script>
 
 {/body}

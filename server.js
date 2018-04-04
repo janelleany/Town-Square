@@ -12,16 +12,6 @@ const express = require('express'),
     fs = require('fs'),
     fetch = require('node-fetch');
 
-    // app.use(bodyParser.json());
-    // app.use(bodyParser.urlencoded({ extended: true }));
-
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
 var staticPath = path.join(__dirname, '/public');
 
 app.use(express.static(staticPath));
@@ -29,25 +19,6 @@ app.use(express.static(staticPath));
 app.listen(3000, function () {
     console.log('Server running on port 3000');
 });
-
-app.post('/video', upload.single('video'), function (req, res, next) {
-    console.log('/video POST start')
-    console.log(req.body.threadtitle)
-    console.log(req.body.username)
-    console.log(req.file.filename)
-    
-    res.end(console.log('/video POST end'))
-
-})
-
-app.post('/videoReply/*', upload.single('video'), function (req, res, next) {
-    console.log('/videoReply POST start')
-    console.log(req.body.username)
-    console.log(req.body.thread_id)
-    console.log(req.file.filename)
-    res.end(console.log('/videoReply POST end'))
-
-})
 
 config = {
     host: 'localhost',
@@ -64,15 +35,10 @@ let pool = new pg.Pool(config);
 app.engine('dust', cons.dust);
 app.set('view engine', 'dust');
 app.set('views', __dirname + '/views');
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-
-let getSuffix = function (req) {
-    return req.url.split('/').pop();
-};
 
 // GET 
 
@@ -106,7 +72,9 @@ app.get('/threads', function (req, res) {
     });
 });
 
-app.get('/thread/*', function (req, res) {
+app.get('/thread/*', function (req, res) { // add :id
+    let threadid = req.params;
+    console.log(threadid[0])
     pool.connect(function (err, client, done) {
         if (err) {
             console.log("not able to get connection " + err);
@@ -146,35 +114,55 @@ app.get('/thread/*', function (req, res) {
 });
 
 app.get('/createPost', function (req, res) {
-    pool.connect(function (err, client, done) {
-        if (err) {
-            console.log("not able to get connection " + err);
-            res.status(400).send(err);
-        }
-        client.query('SELECT * from posts', function (err, result) {
-            done();
-            if (err) {
-                console.log(err);
-                res.status(400).send(err);
-            }
-            res.render('createPost', {
-                posts: result.rows
-            });
-        });
+    console.log('GET /createPost start');
+    res.render('createPost', {
     });
+    // res.end(console.log('GET /createPost start'));
 });
 
-app.get(`/createReply`, function (req, res) {
-    res.render('createReply', {
-        });
+app.get(`/createReply/:uid`, function (req, res) {
+    console.log('GET /createReply')
+    // console.log(req)
+    // console.log(res)
+ res.render('createReply', {
+            });
+    
     });
 
-function logFetch(url) {
-    return fetch(url)
-        .then(response => response.text())
-        .then(text => {
-            console.log('TEXT', text);
-        }).catch(err => {
-            console.error('fetch failed', err);
-        });
-}
+// POST
+
+app.post('/video', upload.single('video'), function (req, res, next) {
+    console.log('/video POST start')
+
+    console.log(req.body.threadtitle)
+    console.log(req.body.username)
+    console.log(req.file.filename)
+    
+    res.end(console.log('/video POST end'))
+
+})
+
+app.post('/postReply', upload.single('video'), function (req, res, next) {
+    console.log('/videoReply POST start')
+
+    console.log(req.body.username)
+    console.log(req.body.thread_id)
+    console.log(req.body.post_id)
+    console.log(req.file.filename)
+
+    res.end(console.log('/videoReply POST end'))
+})
+
+// function logFetch(url) {
+//     return fetch(url)
+//         .then(response => response.text())
+//         .then(text => {
+//             console.log('TEXT', text);
+//         }).catch(err => {
+//             console.error('fetch failed', err);
+//         });
+// }
+
+let getSuffix = function (req) {
+    return req.url.split('/').pop();
+};

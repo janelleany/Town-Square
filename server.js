@@ -7,7 +7,7 @@ const express = require('express'),
     app = express(),
     multer = require('multer'),
     upload = multer({
-        dest: 'uploads/'
+        dest: 'public/uploads/'
     }),
     fs = require('fs'),
     fetch = require('node-fetch');
@@ -30,6 +30,8 @@ app.listen(3000, function () {
     console.log('Server running on port 3000');
 });
 
+
+// POST
 app.post('/video', upload.single('video'), function (req, res, next) {
     console.log('/video POST start')
     console.log(req.body.threadtitle)
@@ -37,13 +39,27 @@ app.post('/video', upload.single('video'), function (req, res, next) {
     console.log(req.file.filename)
     let dt = new Date();
     var utcDate = dt.toUTCString();
+    let timeStamp = function () {
+        var cDate = new Date();
+        var sChar = String.fromCharCode(39);
+        var timeStampVar = sChar + cDate.getFullYear() + '-' + (cDate.getMonth() + 1) + '-' + cDate.getDate() + ' ' + cDate.getHours() + ':' + cDate.getMinutes() + ':' + cDate.getSeconds() + '.' + cDate.getMilliseconds() + sChar;
+        //alert(timeStamp); //'2013-11-5 17:12:15.242'
+       return timeStampVar;
+     };
+
     pool.connect(function (err, client, done) {
         if (err) {
             console.log("not able to get connection " + err);
             res.status(400).send(err);
         }
-        client.query(`INSERT INTO posts (videopath, thumbnailpath, timecreated, user_id, thread_id)
-        VALUES ('uploads/${req.file.filename}.webm','uploads/${req.file.filename}.jpg', ${utcDate}, ${req.body.username}, 2 );`, function (err, result) {
+
+        
+
+        client.query( 
+
+            'INSERT INTO posts (videopath, thumbnailpath, user_id, thread_id, timecreated) VALUES ($1, $2, $3, $4, $5);'
+            ,
+        ['uploads/'+req.file.filename+'.webm', 'uploads/'+req.file.filename+'.jpg', req.body.username, 2, timeStamp() ]) , function (err, result) {
             done();
             if (err) {
                 console.log(err);
@@ -52,7 +68,7 @@ app.post('/video', upload.single('video'), function (req, res, next) {
             res.render('threads', {
                 threads: result.rows
             });
-        });
+        };
     });
     res.end(console.log('/video POST end'))
 
@@ -60,7 +76,7 @@ app.post('/video', upload.single('video'), function (req, res, next) {
 
 config = {
     host: 'localhost',
-    user: 'ubuntu',
+    user: 'kboot',
     // user: 'put your username here'
     database: 'townsquare_db',
     port: 5432,
@@ -101,8 +117,9 @@ app.get('/threads', function (req, res) {
                         JOIN posts psts
                         ON psts.thread_id = thrds.id
                         JOIN users usrs
-                        ON psts.user_id = usrs.id
-                        ORDER BY psts.thread_id, psts.timecreated; `, function (err, result) {
+                        ON psts.user_id = usrs.username
+                        ORDER BY psts.thread_id, psts.timecreated; `, 
+                        function (err, result) {
             done();
             if (err) {
                 console.log(err);
@@ -139,10 +156,12 @@ app.get('/thread/*', function (req, res) {
                         JOIN posts psts
                         ON psts.thread_id = thrds.id
                         JOIN users usrs
-                        ON psts.user_id = usrs.id
+                        ON psts.user_id = usrs.username
                         WHERE psts.thread_id = ${postId}
                         ORDER BY psts.timecreated;`, function (err, result) {
-            done();
+             done();
+            console.log('res: ', result.rows);
+            
             if (err) {
                 console.log(err);
                 res.status(400).send(err);

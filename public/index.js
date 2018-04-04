@@ -52,6 +52,7 @@ let recordVideo = () => {
                 let formData = new FormData()
                 formData.append('video', recordedBlob)
                 recording.src = URL.createObjectURL(recordedBlob);
+                reRecord();
                 submitThread(formData);
 
             }).then(showPreview => {
@@ -135,6 +136,18 @@ let getPath = () => {
     let regex = /^\/createReply\/([A-Za-z0-9-]+)$/g;
     let id = regex.exec(path);
     return id[1]
+}
+
+let reRecord = () => {
+    let reRecordSelector = document.querySelector('.re_record')
+    let showVideoSelector = document.querySelector('.showVideo')
+    let recordVideoSelector = document.querySelector('.recordVideo')
+    
+    reRecordSelector.addEventListener('click', () => {
+        recordVideoSelector.className = 'recordVideo viewable-on animated slideInUp'
+        showVideoSelector.className = 'showVideo viewable-off'
+    })
+
 }
 
 startPreview();

@@ -12,8 +12,8 @@ const express = require('express'),
     fs = require('fs'),
     fetch = require('node-fetch');
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    // app.use(bodyParser.json());
+    // app.use(bodyParser.urlencoded({ extended: true }));
 
 const readline = require('readline');
 
@@ -164,24 +164,10 @@ app.get('/createPost', function (req, res) {
     });
 });
 
-app.get('/createReply', function (req, res) {
-    pool.connect(function (err, client, done) {
-        if (err) {
-            console.log("not able to get connection " + err);
-            res.status(400).send(err);
-        }
-        client.query('SELECT * from posts', function (err, result) {
-            done();
-            if (err) {
-                console.log(err);
-                res.status(400).send(err);
-            }
-            res.render('createReply', {
-                posts: result.rows
-            });
+app.get(`/createReply`, function (req, res) {
+    res.render('createReply', {
         });
     });
-});
 
 function logFetch(url) {
     return fetch(url)

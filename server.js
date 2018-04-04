@@ -60,7 +60,7 @@ app.post('/video', upload.single('video'), function (req, res, next) {
 
 config = {
     host: 'localhost',
-    user: 'ubuntu',
+    user: 'jra',
     // user: 'put your username here'
     database: 'townsquare_db',
     port: 5432,
